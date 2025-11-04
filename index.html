@@ -5,33 +5,52 @@
   <title>IU Football Gameday Countdown</title>
   https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap
   <style>
-    body {
-      font-family: 'Roboto Slab', serif;
-      background-color: #f2e6d0; /* Cream */
-      color: #990000; /* Crimson */
-      text-align: center;
-      padding: 20px;
-    }
+body {
+  font-family: 'Roboto Slab', serif;
+  background-color: #f2e6d0; /* Cream */
+  color: #990000; /* Crimson */
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+}
 
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
 
-    .countdown, .game-info, .weather {
-      margin: 20px auto;
-      padding: 15px;
-      border: 2px solid #990000;
-      border-radius: 10px;
-      max-width: 600px;
-      background-color: #fff;
-    }
+.countdown, .game-info, .weather {
+  margin: 20px auto;
+  padding: 15px;
+  border: 2px solid #990000;
+  border-radius: 10px;
+  max-width: 600px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
 
-    .section-title {
-      font-size: 1.5em;
-      margin-bottom: 10px;
-      color: #990000;
-    }
+.section-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #990000;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.8em;
+  }
+
+  .section-title {
+    font-size: 1.2em;
+  }
+
+  .countdown, .game-info, .weather {
+    padding: 10px;
+    margin: 10px;
+    width: 90%;
+  }
+}
   </style>
 </head>
 <body>

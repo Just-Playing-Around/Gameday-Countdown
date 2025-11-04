@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IU Football Gameday Countdown</title>
+  https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap
+  <style>
+    body {
+      font-family: 'Roboto Slab', serif;
+      background-color: #f2e6d0; /* Cream */
+      color: #990000; /* Crimson */
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .countdown, .game-info, .weather {
+      margin: 20px auto;
+      padding: 15px;
+      border: 2px solid #990000;
+      border-radius: 10px;
+      max-width: 600px;
+      background-color: #fff;
+    }
+
+    .section-title {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #990000;
+    }
+  </style>
+</head>
+<body>
+  <h1>IU Football Gameday Countdown</h1>
+
+  <div class="countdown">
+    <div class="section-title">Next Game Countdown</div>
+    <p id="timer">Loading...</p>
+  </div>
+
+  <div class="game-info">
+    <div class="section-title">Next Game Info</div>
+    <p><strong>Opponent:</strong> Penn State</p>
+    <p><strong>Location:</strong> University Park, PA</p>
+    <p><strong>Kickoff:</strong> November 8, 2025 at 12:00 PM</p>
+    <p><strong>TV:</strong> FOX</p>
+  </div>
+
+  <div class="weather">
+    <div class="section-title">Expected Weather</div>
+    <p id="weather">Loading weather...</p>
+  </div>
+
+  <script>
+    function updateCountdown() {
+  const gameDate = new Date("November 8, 2025 12:00:00");
+  const now = new Date();
+  const timeDiff = gameDate - now;
+
+  if (timeDiff <= 0) {
+    document.getElementById("timer").innerHTML = "It's gameday!";
+    return;
+  }
+
+  const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+  const seconds = Math.floor((timeDiff / 1000) % 60);
+
+ minutes}m ${seconds}s`;
+}
+
+// Update every second
+setInterval(updateCountdown, 1000);
+
+async function fetchWeather() {
+  const lat = 40.7982; // University Park, PA
+  const lon = -77.8599;
+
+  try {
+    // Step 1: Get forecast URL for the location
+    const pointResponse = await fetch(`https://api.weather.gov/points/${lat},${lon}`, {
+      headers: {
+        "User-Agent": "IU-Gameday-App (your-email@example.com)"
+      }
+    });
+    const pointData = await pointResponse.json();
+    const forecastUrl = pointData.properties.forecast;
+
+    // Step 2: Fetch the actual forecast
+    const forecastResponse = await fetch(forecastUrl, {
+      headers: {
+        "User-Agent": "IU-Gameday-App (your-email@example.com)"
+      }
+    });
+    const forecastData = await forecastResponse.json();
+    const forecast = forecastData.properties.periods[0]; // First forecast period
+
+    // Step 3: Display the forecast
+    document.getElementById("weather").innerHTML =
+      `Forecast: ${forecast.shortForecast}, ${forecast.temperature}°${forecast.temperatureUnit}`;
+  } catch (error) {
+    console.error("Weather API error:", error);
+    document.getElementById("weather").innerHTML = "Unable to load weather data.";
+  }
+}
+
+fetchWeather();
+
+const games = [
+  {
+    date: "2025-11-08",
+    opponent: "Penn State",
+    location: "University Park, PA",
+    kickoff: "12:00 PM",
+    tv: "FOX"
+  },
+  {
+    date: "2025-11-15",
+    opponent: "Wisconsin",
+    location: "Bloomington, IN",
+    kickoff: "1:00 PM",
+    tv: "TBA"
+  },
+  {
+    date: "2025-11-28",
+    opponent: "Purdue",
+    location: "West Lafayette, IN",
+    kickoff: "7:30 PM",
+    tv: "NBC / Peacock"
+  }
+];
+
+function getNextGame() {
+  const today = new Date();
+  for (let game of games) {
+    const gameDate = new Date(game.date + " " + game.kickoff);
+    if (gameDate > today) {
+      return game;
+    }
+  }
+  return null;
+}
+
+function displayNextGameInfo() {
+  const game = getNextGame();
+  if (game) {
+    document.querySelector(".game-info").innerHTML = `
+      <div class="section-title">Next Game Info</div>
+      <p><strong>Opponent:</strong> ${game.opponent}</p>
+      <p><strong>Location:</strong> ${game.location}</p>
+      <p><strong>Kickoff:</strong> ${game.date} at ${game.kickoff}</p>
+      <p><strong>TV:</strong> ${game.tv}</p>
+    `;
+  } else {
+    document.querySelector(".game-info").innerHTML = "<p>No upcoming games.</p>";
+  }
+}
+
+displayNextGameInfo();
+
+  </script>
+</body>

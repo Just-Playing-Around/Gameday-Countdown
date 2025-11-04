@@ -170,11 +170,17 @@ function getNextGame() {
 function displayNextGameInfo() {
   const game = getNextGame();
   if (game) {
+    const gameDate = new Date(`${game.date} ${game.kickoff}`);
+    
+    // Format the date with day of the week
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = gameDate.toLocaleDateString('en-US', options);
+
     document.querySelector(".game-info").innerHTML = `
       <div class="section-title">Next Game Info</div>
       <p><strong>Opponent:</strong> ${game.opponent}</p>
       <p><strong>Location:</strong> ${game.location}</p>
-      <p><strong>Kickoff:</strong> ${game.date} at ${game.kickoff}</p>
+      <p><strong>Kickoff:</strong> ${formattedDate} at ${game.kickoff}</p>
       <p><strong>TV:</strong> ${game.tv}</p>
     `;
   } else {

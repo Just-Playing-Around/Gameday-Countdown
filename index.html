@@ -56,7 +56,8 @@
   </div>
 
   <script>
-    function updateCountdown() {
+ function updateCountdown() {
+ 
   const gameDate = new Date("November 8, 2025 12:00:00");
   const now = new Date();
   const timeDiff = gameDate - now;
@@ -68,14 +69,11 @@
 
   const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
-  const seconds = Math.floor((timeDiff / 1000) % 60);
 
- minutes}m ${seconds}s`;
 }
 
-// Update every second
 setInterval(updateCountdown, 1000);
+updateCountdown();
 
 async function fetchWeather() {
   const lat = 40.7982; // University Park, PA
